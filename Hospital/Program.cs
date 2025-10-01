@@ -1,8 +1,44 @@
-﻿using Hospital;
+﻿using Hospital.Employees.Workers;
 
-var doc = new Doctor("Thobias", "Radiology", "Alex", DateTime.Today);
-Console.WriteLine(doc.GetInformationDoc());
+class Program
+{
+    // static Doctor d1 = new Doctor("Ali", 12345, 01);
+    static void Main(string[] args)
+    {
+        while (true)
+        {
+            switch (Menu())
+            {
+                case "0":
+                    Exit();
+                    break;
+                case "1":
+                    DoctorClass();
+                    break;
+            }
+        }
+        
+    }
 
+    static void DoctorClass()
+    {
+        var d1 = new Doctor("Ali", 234, 0)
+        {
+            StartTime = DateTime.Today.AddHours(8),
+            EndTime   = DateTime.Today.AddHours(16) 
+        };
 
-doc.ActualCheckInTime = DateTime.Today.AddHours(9); // heute um 09:00 Uhr
-Console.WriteLine(doc.ActualCheckInTime?.ToString("HH:mm"));
+        var overTime = d1.GetWorkTime();         
+        var pretty   = d1.FormatSigned(overTime);  
+        Console.WriteLine($"{d1} worked {pretty}");
+    }
+
+    static string Menu()
+    {
+        Console.WriteLine("=== Menu ===");
+        Console.WriteLine("1) Doctor Class");
+        return Console.ReadLine();
+    }
+
+    static void Exit() => Environment.Exit(0);
+}
